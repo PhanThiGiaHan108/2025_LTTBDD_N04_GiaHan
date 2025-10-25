@@ -1,8 +1,50 @@
 import 'package:flutter/material.dart';
 import 'dang_ky.dart';
+import 'trang_chu.dart';
 
-class DangNhap extends StatelessWidget {
+class DangNhap extends StatefulWidget {
   const DangNhap({super.key});
+
+  @override
+  State<DangNhap> createState() => _DangNhapState();
+}
+
+class _DangNhapState extends State<DangNhap> {
+  // 🎯 Controller để lấy giá trị từ TextField
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  // 🧩 Hàm đăng nhập (tài khoản cứng)
+  void _login() {
+    print("Đang đăng nhập...");
+    const demoEmail = "demo@gmail.com";
+    const demoPassword = "123456";
+
+    final email = emailController.text.trim();
+    final password = passwordController.text.trim();
+
+    if (email.isEmpty || password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Vui lòng nhập đầy đủ thông tin!")),
+      );
+      return;
+    }
+
+    if (email == demoEmail && password == demoPassword) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text("Đăng nhập thành công!")));
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const TrangChu()),
+      );
+    } else {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text("Sai email hoặc mật khẩu!")));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -110,9 +152,13 @@ class DangNhap extends StatelessWidget {
                       ),
                       child: Column(
                         children: [
-                          _buildInput('Email'),
+                          _buildInput('Email', controller: emailController),
                           const SizedBox(height: 15),
-                          _buildInput('Mật khẩu', obscure: true),
+                          _buildInput(
+                            'Mật khẩu',
+                            obscure: true,
+                            controller: passwordController,
+                          ),
                           const SizedBox(height: 25),
 
                           // 🔑 Nút đăng nhập chính
@@ -125,9 +171,9 @@ class DangNhap extends StatelessWidget {
                               elevation: 4,
                               minimumSize: const Size(double.infinity, 55),
                             ),
-                            onPressed: () {},
+                            onPressed: _login,
                             child: const Text(
-                              'Đăng nhập',
+                              'login',
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
@@ -140,7 +186,9 @@ class DangNhap extends StatelessWidget {
                           TextButton(
                             onPressed: () {
                               Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(builder: (_) => const DangKy()),
+                                MaterialPageRoute(
+                                  builder: (_) => const DangKy(),
+                                ),
                               );
                             },
                             child: const Text(
@@ -215,8 +263,13 @@ class DangNhap extends StatelessWidget {
     );
   }
 
-  Widget _buildInput(String hint, {bool obscure = false}) {
+  Widget _buildInput(
+    String hint, {
+    bool obscure = false,
+    TextEditingController? controller,
+  }) {
     return TextField(
+      controller: controller,
       obscureText: obscure,
       decoration: InputDecoration(
         hintText: hint,

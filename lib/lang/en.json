@@ -1,0 +1,15 @@
+{
+  "home": "Home",
+  "favorites": "Your Words",
+  "settings": "Settings",
+  "about": "About Us",
+  "logout": "Logout",
+  "language": "Language",
+  "english": "English",
+  "vietnamese": "Vietnamese",
+  "team_info": "Team Information",
+  "login": "Login",
+  "signup": "Sign Up",
+  "search": "Enter a word to look up",
+  "no_favorites": "No favorite words yet"
+}

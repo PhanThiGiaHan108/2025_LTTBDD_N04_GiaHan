@@ -1,8 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'screens/dang_ky.dart';
+import 'screens/dang_nhap.dart';
+import 'screens/logo.dart';
 
-void main() {
-  runApp(ChicktionaryApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
+
+  runApp(
+    EasyLocalization(
+      saveLocale: true,
+
+      supportedLocales: const [Locale('en'), Locale('vi')],
+      path: 'lib/lang',
+      fallbackLocale: const Locale('vi'),
+      startLocale: const Locale('vi'),
+      child: const ChicktionaryApp(),
+    ),
+  );
 }
 
 class ChicktionaryApp extends StatelessWidget {
@@ -15,9 +31,13 @@ class ChicktionaryApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: 'Itim',
-        scaffoldBackgroundColor: Color(0xFFFFFDE5),
+        scaffoldBackgroundColor: const Color(0xFFFFFDE5),
       ),
-      home: DangKy(),
+      home: const Logo(),
+
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
     );
   }
 }
