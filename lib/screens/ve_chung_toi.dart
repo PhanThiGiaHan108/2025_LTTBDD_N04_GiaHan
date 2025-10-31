@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class VeChungToi extends StatelessWidget {
   const VeChungToi({super.key});
@@ -9,9 +10,12 @@ class VeChungToi extends StatelessWidget {
       backgroundColor: const Color(0xFFFFFDE7),
       appBar: AppBar(
         backgroundColor: const Color(0xFF9C27B0),
-        title: const Text(
-          "Giới thiệu nhóm",
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        title: Text(
+          'team_info'.tr(),
+          style: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         centerTitle: true,
         elevation: 2,
@@ -29,9 +33,9 @@ class VeChungToi extends StatelessWidget {
                   Image.asset('imgs/logo2.png', width: 120, height: 120),
                   const SizedBox(height: 20),
 
-                  const Text(
-                    "ỨNG DỤNG TỪ ĐIỂN ANH - VIỆT",
-                    style: TextStyle(
+                  Text(
+                    'app_title'.tr(),
+                    style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: Colors.deepPurple,
@@ -40,17 +44,17 @@ class VeChungToi extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
 
-                  const Text(
-                    "Môn: Lập trình cho thiết bị di động",
-                    style: TextStyle(fontSize: 15, color: Colors.black54),
+                  Text(
+                    'course'.tr(),
+                    style: const TextStyle(fontSize: 15, color: Colors.black54),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 30),
 
                   // 👥 Thông tin thành viên
-                  const Text(
-                    "Thành viên nhóm:",
-                    style: TextStyle(
+                  Text(
+                    'team_members'.tr(),
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.black87,
@@ -60,25 +64,27 @@ class VeChungToi extends StatelessWidget {
 
                   _buildMember(
                     "Phan Thị Gia Hân",
-                    "MSSV: 23010840",
-                    "Lớp: Lập trình cho thiết bị di động-1-1-25(N04)",
+                    "23010840",
+                    "Lập trình cho thiết bị di động-1-1-25(N04)",
                   ),
 
                   const SizedBox(height: 20),
 
-                  const Text(
-                    "Liên hệ",
-                    style: TextStyle(
+                  Text(
+                    'contact'.tr(),
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.deepPurple,
                     ),
                   ),
                   const SizedBox(height: 8),
-                  const Text(
-                    "Email: 23010840@st.phenikaa-uni.edu.vn",
+                  Text(
+                    'email_label'.tr(
+                      namedArgs: {"email": '23010840@st.phenikaa-uni.edu.vn'},
+                    ),
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.black87),
+                    style: const TextStyle(color: Colors.black87),
                   ),
 
                   const SizedBox(height: 30),
@@ -98,7 +104,7 @@ class VeChungToi extends StatelessWidget {
                       Navigator.pop(context);
                     },
                     icon: const Icon(Icons.arrow_back),
-                    label: const Text("Quay lại"),
+                    label: Text('back'.tr()),
                   ),
                 ],
               ),
@@ -140,8 +146,14 @@ class VeChungToi extends StatelessWidget {
                       fontSize: 16,
                     ),
                   ),
-                  Text(mssv, style: const TextStyle(color: Colors.black54)),
-                  Text(lop, style: const TextStyle(color: Colors.black54)),
+                  Text(
+                    '${'student_id'.tr()} $mssv',
+                    style: const TextStyle(color: Colors.black54),
+                  ),
+                  Text(
+                    '${'class_label'.tr()} $lop',
+                    style: const TextStyle(color: Colors.black54),
+                  ),
                 ],
               ),
             ),

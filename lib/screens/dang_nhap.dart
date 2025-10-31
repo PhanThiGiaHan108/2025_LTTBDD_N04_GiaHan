@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'dang_ky.dart';
 import 'trang_chu.dart';
 
@@ -16,7 +17,7 @@ class _DangNhapState extends State<DangNhap> {
 
   // 🧩 Hàm đăng nhập (tài khoản cứng)
   void _login() {
-    print("Đang đăng nhập...");
+    // Logging (debug)
     const demoEmail = "demo@gmail.com";
     const demoPassword = "123456";
 
@@ -24,16 +25,16 @@ class _DangNhapState extends State<DangNhap> {
     final password = passwordController.text.trim();
 
     if (email.isEmpty || password.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Vui lòng nhập đầy đủ thông tin!")),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('please_fill_info'.tr())));
       return;
     }
 
     if (email == demoEmail && password == demoPassword) {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(const SnackBar(content: Text("Đăng nhập thành công!")));
+      ).showSnackBar(SnackBar(content: Text('login_success'.tr())));
 
       Navigator.pushReplacement(
         context,
@@ -42,7 +43,7 @@ class _DangNhapState extends State<DangNhap> {
     } else {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(const SnackBar(content: Text("Sai email hoặc mật khẩu!")));
+      ).showSnackBar(SnackBar(content: Text('wrong_credentials'.tr())));
     }
   }
 
@@ -152,10 +153,13 @@ class _DangNhapState extends State<DangNhap> {
                       ),
                       child: Column(
                         children: [
-                          _buildInput('Email', controller: emailController),
+                          _buildInput(
+                            'email_hint'.tr(),
+                            controller: emailController,
+                          ),
                           const SizedBox(height: 15),
                           _buildInput(
-                            'Mật khẩu',
+                            'password_hint'.tr(),
                             obscure: true,
                             controller: passwordController,
                           ),
@@ -172,9 +176,9 @@ class _DangNhapState extends State<DangNhap> {
                               minimumSize: const Size(double.infinity, 55),
                             ),
                             onPressed: _login,
-                            child: const Text(
-                              'login',
-                              style: TextStyle(
+                            child: Text(
+                              'login'.tr(),
+                              style: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
@@ -191,9 +195,9 @@ class _DangNhapState extends State<DangNhap> {
                                 ),
                               );
                             },
-                            child: const Text(
-                              'Tôi chưa có tài khoản',
-                              style: TextStyle(color: Colors.grey),
+                            child: Text(
+                              'no_account_yet'.tr(),
+                              style: const TextStyle(color: Colors.grey),
                             ),
                           ),
                           const SizedBox(height: 20),
@@ -201,7 +205,7 @@ class _DangNhapState extends State<DangNhap> {
                           // 🌐 Đăng nhập Google
                           _buildSocialButton(
                             icon: Icons.g_mobiledata,
-                            text: 'Đăng nhập với Google',
+                            text: 'login_with_google'.tr(),
                             iconColor: Colors.redAccent,
                           ),
                           const SizedBox(height: 15),
@@ -209,7 +213,7 @@ class _DangNhapState extends State<DangNhap> {
                           // 💙 Đăng nhập Facebook
                           _buildSocialButton(
                             icon: Icons.facebook,
-                            text: 'Đăng nhập với Facebook',
+                            text: 'login_with_facebook'.tr(),
                             iconColor: Colors.blueAccent,
                           ),
                         ],
@@ -227,9 +231,9 @@ class _DangNhapState extends State<DangNhap> {
                         Icons.lock_outline,
                         color: Color(0xFF9C27B0),
                       ),
-                      label: const Text(
-                        'Quên mật khẩu?',
-                        style: TextStyle(
+                      label: Text(
+                        'forgot_password'.tr(),
+                        style: const TextStyle(
                           color: Color(0xFF9C27B0),
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
@@ -248,10 +252,10 @@ class _DangNhapState extends State<DangNhap> {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    const Text(
-                      'Nhấn để nhận hướng dẫn khôi phục mật khẩu qua email',
+                    Text(
+                      'forgot_password_note'.tr(),
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 12, color: Colors.grey),
+                      style: const TextStyle(fontSize: 12, color: Colors.grey),
                     ),
                   ],
                 ),

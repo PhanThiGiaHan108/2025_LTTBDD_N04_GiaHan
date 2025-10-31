@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'dang_nhap.dart';
 
 class DangKy extends StatelessWidget {
@@ -107,11 +108,14 @@ class DangKy extends StatelessWidget {
                       ),
                       child: Column(
                         children: [
-                          _buildInput('Email'),
+                          _buildInput('email_hint'.tr()),
                           const SizedBox(height: 15),
-                          _buildInput('Mật khẩu', obscure: true),
+                          _buildInput('password_hint'.tr(), obscure: true),
                           const SizedBox(height: 15),
-                          _buildInput('Nhập lại mật khẩu', obscure: true),
+                          _buildInput(
+                            'confirm_password_hint'.tr(),
+                            obscure: true,
+                          ),
                           const SizedBox(height: 25),
 
                           ElevatedButton(
@@ -124,9 +128,9 @@ class DangKy extends StatelessWidget {
                               minimumSize: const Size(double.infinity, 55),
                             ),
                             onPressed: () {},
-                            child: const Text(
-                              'Đăng ký',
-                              style: TextStyle(
+                            child: Text(
+                              'signup'.tr(),
+                              style: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
@@ -144,9 +148,9 @@ class DangKy extends StatelessWidget {
                           MaterialPageRoute(builder: (_) => const DangNhap()),
                         );
                       },
-                      child: const Text(
-                        'Đã có tài khoản? Đăng nhập',
-                        style: TextStyle(color: Color(0xFF9C27B0)),
+                      child: Text(
+                        'already_have_account'.tr(),
+                        style: const TextStyle(color: Color(0xFF9C27B0)),
                       ),
                     ),
                   ],

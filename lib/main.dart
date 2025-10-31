@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'screens/dang_ky.dart';
-import 'screens/dang_nhap.dart';
 import 'screens/logo.dart';
 
 Future<void> main() async {
