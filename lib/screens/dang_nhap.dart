@@ -15,6 +15,9 @@ class _DangNhapState extends State<DangNhap> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
+  // 👁️ Biến để ẩn/hiện mật khẩu
+  bool _obscurePassword = true;
+
   // 🧩 Hàm đăng nhập (tài khoản cứng)
   void _login() {
     // Logging (debug)
@@ -158,9 +161,8 @@ class _DangNhapState extends State<DangNhap> {
                             controller: emailController,
                           ),
                           const SizedBox(height: 15),
-                          _buildInput(
+                          _buildPasswordInput(
                             'password_hint'.tr(),
-                            obscure: true,
                             controller: passwordController,
                           ),
                           const SizedBox(height: 25),
@@ -225,7 +227,7 @@ class _DangNhapState extends State<DangNhap> {
                     // 🔗 Quên mật khẩu (styled button)
                     TextButton.icon(
                       onPressed: () {
-                        // TODO: navigate to forgot-password flow
+                        _showForgotPasswordDialog();
                       },
                       icon: const Icon(
                         Icons.lock_outline,
@@ -293,6 +295,153 @@ class _DangNhapState extends State<DangNhap> {
           borderSide: const BorderSide(color: Color(0xFF9C27B0), width: 1.5),
         ),
       ),
+    );
+  }
+
+  // 🔐 Widget mật khẩu với nút ẩn/hiện
+  Widget _buildPasswordInput(String hint, {TextEditingController? controller}) {
+    return TextField(
+      controller: controller,
+      obscureText: _obscurePassword,
+      decoration: InputDecoration(
+        hintText: hint,
+        filled: true,
+        fillColor: Colors.white,
+        hintStyle: const TextStyle(color: Colors.grey),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 14,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(color: Colors.grey, width: 0.6),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(color: Color(0xFF9C27B0), width: 1.5),
+        ),
+        suffixIcon: IconButton(
+          icon: Icon(
+            _obscurePassword ? Icons.visibility_off : Icons.visibility,
+            color: Colors.grey,
+          ),
+          onPressed: () {
+            setState(() {
+              _obscurePassword = !_obscurePassword;
+            });
+          },
+        ),
+      ),
+    );
+  }
+
+  // 💬 Dialog quên mật khẩu
+  void _showForgotPasswordDialog() {
+    final TextEditingController forgotEmailController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          title: Row(
+            children: [
+              const Icon(Icons.lock_reset, color: Color(0xFF9C27B0)),
+              const SizedBox(width: 10),
+              Text(
+                'forgot_password'.tr(),
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'forgot_password_instruction'.tr(),
+                style: const TextStyle(color: Colors.grey),
+              ),
+              const SizedBox(height: 20),
+              TextField(
+                controller: forgotEmailController,
+                decoration: InputDecoration(
+                  hintText: 'email_hint'.tr(),
+                  prefixIcon: const Icon(Icons.email, color: Color(0xFF9C27B0)),
+                  filled: true,
+                  fillColor: Colors.grey.shade100,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: BorderSide.none,
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: BorderSide(color: Colors.grey.shade300),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: const BorderSide(
+                      color: Color(0xFF9C27B0),
+                      width: 2,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text(
+                'cancel'.tr(),
+                style: const TextStyle(color: Colors.grey),
+              ),
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF9C27B0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 12,
+                ),
+              ),
+              onPressed: () {
+                final email = forgotEmailController.text.trim();
+                if (email.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('please_enter_email'.tr())),
+                  );
+                  return;
+                }
+
+                // Simulate sending reset email
+                Navigator.pop(context);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('reset_password_sent'.tr()),
+                    backgroundColor: Colors.green,
+                  ),
+                );
+              },
+              child: Text(
+                'send'.tr(),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 

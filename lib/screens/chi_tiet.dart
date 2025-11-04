@@ -192,7 +192,16 @@ class _ChiTietState extends State<ChiTiet> {
                 spacing: 8,
                 children: [
                   for (final s in synonyms)
-                    if (s != null) Chip(label: Text(s.toString())),
+                    if (s != null)
+                      ActionChip(
+                        label: Text(s.toString()),
+                        onPressed: () {
+                          // Quay lại trang chủ và tìm kiếm từ này
+                          Navigator.pop(context, s.toString());
+                        },
+                        backgroundColor: Colors.purple.shade50,
+                        side: BorderSide(color: Colors.purple.shade200),
+                      ),
                 ],
               ),
             ],

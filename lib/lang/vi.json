@@ -11,6 +11,11 @@
   "login": "Đăng nhập",
   "signup": "Đăng ký",
   "search": "Nhập từ cần tra",
+  "search_prompt": "Nhập từ để tra cứu",
+  "search_hint": "Tìm kiếm nghĩa, phiên âm và ví dụ",
+  "popular_words": "Từ phổ biến:",
+  "no_results_hint": "Không tìm thấy kết quả cho '{query}'",
+  "clear_search": "Xóa tìm kiếm",
   "no_favorites": "Chưa có từ yêu thích nào",
   "phonetic_label": "Phiên âm:",
   "added_to_favorites": "Đã thêm '{word}' vào yêu thích!",
@@ -78,5 +83,9 @@
   "theme_blue": "Xanh dương",
   "theme_green": "Xanh lá",
   "theme_orange": "Cam",
-  "theme_pink": "Hồng"
+  "theme_pink": "Hồng",
+  "forgot_password_instruction": "Nhập email của bạn để nhận liên kết đặt lại mật khẩu",
+  "please_enter_email": "Vui lòng nhập email",
+  "send": "Gửi",
+  "reset_password_sent": "Đã gửi email đặt lại mật khẩu. Vui lòng kiểm tra hộp thư!"
 }

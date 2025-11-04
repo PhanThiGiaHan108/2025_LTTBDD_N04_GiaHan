@@ -133,8 +133,9 @@ class _TrangChuState extends State<TrangChu> {
   }
 
   List<Map<String, dynamic>> _getFilteredWords() {
+    // Nếu chưa nhập gì thì trả về danh sách rỗng (không hiển thị gì)
     if (_searchQuery.isEmpty) {
-      return _words;
+      return [];
     }
 
     final query = _searchQuery.toLowerCase();
@@ -150,7 +151,7 @@ class _TrangChuState extends State<TrangChu> {
   }
 
   // 📘 Danh sách từ mẫu
-  final List<Map<String, dynamic>> _words = [
+  List<Map<String, dynamic>> _words = [
     {
       "english": "Hello",
       "phonetic": "/həˈləʊ/",
@@ -187,6 +188,23 @@ class _TrangChuState extends State<TrangChu> {
         {"en": "By the book", "vi": "Theo đúng quy trình"},
       ],
       "synonyms": ["Volume", "Tome", "Publication"],
+    },
+    {
+      "english": "Tome",
+      "phonetic": "/təʊm/",
+      "type": "danh từ",
+      "vietnamese": "Sách lớn, quyển sách dày",
+      "examples": [
+        {"en": "He opened the ancient tome.", "vi": "Anh ấy mở quyển sách cổ."},
+        {
+          "en": "The library contains many rare tomes.",
+          "vi": "Thư viện chứa nhiều quyển sách quý hiếm.",
+        },
+      ],
+      "idioms": [
+        {"en": "A scholarly tome", "vi": "Một quyển sách học thuật"},
+      ],
+      "synonyms": ["Book", "Volume", "Work"],
     },
     {
       "english": "Apple",
@@ -238,6 +256,34 @@ class _TrangChuState extends State<TrangChu> {
       "synonyms": ["Pretty", "Gorgeous", "Lovely"],
     },
     {
+      "english": "Lovely",
+      "phonetic": "/ˈlʌvli/",
+      "type": "tính từ",
+      "vietnamese": "Đẹp, dễ thương",
+      "examples": [
+        {"en": "What a lovely dress!", "vi": "Chiếc váy thật đẹp!"},
+        {"en": "She is a lovely person.", "vi": "Cô ấy là người dễ thương."},
+      ],
+      "idioms": [
+        {"en": "Lovely weather", "vi": "Thời tiết đẹp"},
+      ],
+      "synonyms": ["Beautiful", "Pretty", "Charming"],
+    },
+    {
+      "english": "Gorgeous",
+      "phonetic": "/ˈɡɔːdʒəs/",
+      "type": "tính từ",
+      "vietnamese": "Tuyệt đẹp, lộng lẫy",
+      "examples": [
+        {"en": "You look gorgeous!", "vi": "Bạn trông tuyệt đẹp!"},
+        {"en": "The sunset is gorgeous.", "vi": "Hoàng hôn thật lộng lẫy."},
+      ],
+      "idioms": [
+        {"en": "Drop-dead gorgeous", "vi": "Đẹp xuất sắc"},
+      ],
+      "synonyms": ["Beautiful", "Stunning", "Magnificent"],
+    },
+    {
       "english": "Happy",
       "phonetic": "/ˈhæpi/",
       "type": "tính từ",
@@ -253,6 +299,40 @@ class _TrangChuState extends State<TrangChu> {
         {"en": "Happy as a clam", "vi": "Vui như con chim"},
       ],
       "synonyms": ["Joyful", "Cheerful", "Delighted"],
+    },
+    {
+      "english": "Joyful",
+      "phonetic": "/ˈdʒɔɪfl/",
+      "type": "tính từ",
+      "vietnamese": "Vui vẻ, hân hoan",
+      "examples": [
+        {"en": "The children were joyful.", "vi": "Bọn trẻ rất vui vẻ."},
+        {"en": "It was a joyful occasion.", "vi": "Đó là một dịp vui vẻ."},
+      ],
+      "idioms": [
+        {"en": "Joyful noise", "vi": "Tiếng rộn vui"},
+      ],
+      "synonyms": ["Happy", "Cheerful", "Merry"],
+    },
+    {
+      "english": "Cheerful",
+      "phonetic": "/ˈtʃɪəfl/",
+      "type": "tính từ",
+      "vietnamese": "Vui vẻ, phấn khởi",
+      "examples": [
+        {
+          "en": "She has a cheerful personality.",
+          "vi": "Cô ấy có tính cách vui vẻ.",
+        },
+        {
+          "en": "The room is bright and cheerful.",
+          "vi": "Căn phòng sáng sủa và vui vẻ.",
+        },
+      ],
+      "idioms": [
+        {"en": "Cheerful disposition", "vi": "Tính tình vui vẻ"},
+      ],
+      "synonyms": ["Happy", "Joyful", "Bright"],
     },
     {
       "english": "Water",
@@ -1055,26 +1135,167 @@ class _TrangChuState extends State<TrangChu> {
                     final filteredWords = _getFilteredWords();
 
                     if (filteredWords.isEmpty) {
-                      return Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(
-                              Icons.search_off,
-                              size: 80,
-                              color: Colors.grey,
+                      // Hiển thị thông báo khác nhau tùy theo có đang tìm kiếm hay không
+                      if (_searchQuery.isEmpty) {
+                        // Chưa nhập gì -> hiển thị lời nhắc tìm kiếm
+                        return Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(32.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                // Icon với gradient background
+                                Container(
+                                  width: 120,
+                                  height: 120,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        themeColor.withOpacity(0.2),
+                                        themeColor.withOpacity(0.1),
+                                      ],
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                    ),
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Icon(
+                                    Icons.search,
+                                    size: 60,
+                                    color: themeColor,
+                                  ),
+                                ),
+                                const SizedBox(height: 30),
+                                // Text chính
+                                Text(
+                                  "search_prompt".tr(),
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w600,
+                                    color: textColor,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                                const SizedBox(height: 12),
+                                // Text phụ
+                                Text(
+                                  "search_hint".tr(),
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: textColor.withOpacity(0.6),
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                                const SizedBox(height: 40),
+                                // Gợi ý từ khóa phổ biến
+                                Text(
+                                  "popular_words".tr(),
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                    color: textColor.withOpacity(0.7),
+                                  ),
+                                ),
+                                const SizedBox(height: 16),
+                                Wrap(
+                                  spacing: 10,
+                                  runSpacing: 10,
+                                  alignment: WrapAlignment.center,
+                                  children: [
+                                    _buildSuggestionChip('Hello', themeColor),
+                                    _buildSuggestionChip('Book', themeColor),
+                                    _buildSuggestionChip('Happy', themeColor),
+                                    _buildSuggestionChip('Learn', themeColor),
+                                    _buildSuggestionChip(
+                                      'Beautiful',
+                                      themeColor,
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
-                            const SizedBox(height: 20),
-                            Text(
-                              "no_results".tr(),
-                              style: const TextStyle(
-                                fontSize: 18,
-                                color: Colors.grey,
-                              ),
+                          ),
+                        );
+                      } else {
+                        // Đã nhập nhưng không có kết quả
+                        return Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(32.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                // Icon với gradient background
+                                Container(
+                                  width: 120,
+                                  height: 120,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Colors.orange.withOpacity(0.2),
+                                        Colors.orange.withOpacity(0.1),
+                                      ],
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                    ),
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: const Icon(
+                                    Icons.search_off,
+                                    size: 60,
+                                    color: Colors.orange,
+                                  ),
+                                ),
+                                const SizedBox(height: 30),
+                                // Text chính
+                                Text(
+                                  "no_results".tr(),
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w600,
+                                    color: textColor,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                                const SizedBox(height: 12),
+                                // Text phụ với từ khóa tìm kiếm
+                                Text(
+                                  "no_results_hint".tr(
+                                    namedArgs: {"query": _searchQuery},
+                                  ),
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: textColor.withOpacity(0.6),
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                                const SizedBox(height: 24),
+                                // Nút clear search
+                                ElevatedButton.icon(
+                                  onPressed: () {
+                                    setState(() {
+                                      _searchController.clear();
+                                      _searchQuery = "";
+                                    });
+                                  },
+                                  icon: const Icon(Icons.clear),
+                                  label: Text("clear_search".tr()),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: themeColor,
+                                    foregroundColor: Colors.white,
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 24,
+                                      vertical: 12,
+                                    ),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(25),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      );
+                          ),
+                        );
+                      }
                     }
 
                     return ListView.builder(
@@ -1170,19 +1391,29 @@ class _TrangChuState extends State<TrangChu> {
                               borderRadius: BorderRadius.circular(15),
                             ),
                             child: ListTile(
-                              onTap: () {
+                              onTap: () async {
                                 // show a short confirmation then navigate to details
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text('opening_details'.tr()),
                                   ),
                                 );
-                                Navigator.push(
+                                final result = await Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (_) => ChiTiet(word: word),
                                   ),
                                 );
+
+                                // Nếu người dùng click vào từ đồng nghĩa, tự động tìm kiếm từ đó
+                                if (result != null && result is String) {
+                                  setState(() {
+                                    _searchQuery = result;
+                                    _searchController.text = result;
+                                    _selectedIndex =
+                                        0; // Chuyển về tab Trang chủ
+                                  });
+                                }
                               },
                               title: Text(
                                 word["english"] ?? "",
@@ -1313,6 +1544,34 @@ class _TrangChuState extends State<TrangChu> {
         currentLocale: context.locale,
       );
     }
+  }
+
+  // Widget helper cho suggestion chips
+  Widget _buildSuggestionChip(String word, Color themeColor) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _searchController.text = word;
+          _searchQuery = word;
+        });
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        decoration: BoxDecoration(
+          color: themeColor.withOpacity(0.1),
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: themeColor.withOpacity(0.3), width: 1),
+        ),
+        child: Text(
+          word,
+          style: TextStyle(
+            color: themeColor,
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ),
+    );
   }
 
   Widget _buildSettingsCard({

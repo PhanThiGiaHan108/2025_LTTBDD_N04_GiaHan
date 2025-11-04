@@ -2,8 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'dang_nhap.dart';
 
-class DangKy extends StatelessWidget {
+class DangKy extends StatefulWidget {
   const DangKy({super.key});
+
+  @override
+  State<DangKy> createState() => _DangKyState();
+}
+
+class _DangKyState extends State<DangKy> {
+  // 👁️ Biến để ẩn/hiện mật khẩu
+  bool _obscurePassword = true;
+  bool _obscureConfirmPassword = true;
 
   @override
   Widget build(BuildContext context) {
@@ -110,11 +119,14 @@ class DangKy extends StatelessWidget {
                         children: [
                           _buildInput('email_hint'.tr()),
                           const SizedBox(height: 15),
-                          _buildInput('password_hint'.tr(), obscure: true),
+                          _buildPasswordInput(
+                            'password_hint'.tr(),
+                            isPassword: true,
+                          ),
                           const SizedBox(height: 15),
-                          _buildInput(
+                          _buildPasswordInput(
                             'confirm_password_hint'.tr(),
-                            obscure: true,
+                            isPassword: false,
                           ),
                           const SizedBox(height: 25),
 
@@ -182,6 +194,48 @@ class DangKy extends StatelessWidget {
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
           borderSide: const BorderSide(color: Color(0xFF9C27B0), width: 1.5),
+        ),
+      ),
+    );
+  }
+
+  // 🔐 Widget mật khẩu với nút ẩn/hiện
+  Widget _buildPasswordInput(String hint, {required bool isPassword}) {
+    final obscure = isPassword ? _obscurePassword : _obscureConfirmPassword;
+
+    return TextField(
+      obscureText: obscure,
+      decoration: InputDecoration(
+        hintText: hint,
+        filled: true,
+        fillColor: Colors.white,
+        hintStyle: const TextStyle(color: Colors.grey),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 14,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(color: Colors.grey, width: 0.6),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(color: Color(0xFF9C27B0), width: 1.5),
+        ),
+        suffixIcon: IconButton(
+          icon: Icon(
+            obscure ? Icons.visibility_off : Icons.visibility,
+            color: Colors.grey,
+          ),
+          onPressed: () {
+            setState(() {
+              if (isPassword) {
+                _obscurePassword = !_obscurePassword;
+              } else {
+                _obscureConfirmPassword = !_obscureConfirmPassword;
+              }
+            });
+          },
         ),
       ),
     );

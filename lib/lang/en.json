@@ -11,6 +11,11 @@
   "login": "Login",
   "signup": "Sign Up",
   "search": "Enter a word to look up",
+  "search_prompt": "Enter a word to search",
+  "search_hint": "Search for meanings, phonetics and examples",
+  "popular_words": "Popular words:",
+  "no_results_hint": "No results found for '{query}'",
+  "clear_search": "Clear search",
   "no_favorites": "No favorite words yet",
   "phonetic_label": "Phonetic:",
   "added_to_favorites": "Added '{word}' to favorites!",
@@ -78,5 +83,9 @@
   "theme_blue": "Blue",
   "theme_green": "Green",
   "theme_orange": "Orange",
-  "theme_pink": "Pink"
+  "theme_pink": "Pink",
+  "forgot_password_instruction": "Enter your email to receive password reset link",
+  "please_enter_email": "Please enter your email",
+  "send": "Send",
+  "reset_password_sent": "Password reset email sent. Please check your inbox!"
 }
