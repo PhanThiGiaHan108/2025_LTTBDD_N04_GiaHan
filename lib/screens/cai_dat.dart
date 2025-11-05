@@ -3,7 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'dang_nhap.dart';
 import 've_chung_toi.dart';
 
-class SettingsTab extends StatelessWidget {
+class CaiDat extends StatelessWidget {
   final bool isDarkMode;
   final double fontSize;
   final Color themeColor;
@@ -13,7 +13,7 @@ class SettingsTab extends StatelessWidget {
   final Function(Locale) onLocaleChanged;
   final Locale currentLocale;
 
-  const SettingsTab({
+  const CaiDat({
     super.key,
     required this.isDarkMode,
     required this.fontSize,

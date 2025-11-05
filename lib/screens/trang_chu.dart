@@ -5,6 +5,9 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'chi_tiet.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../widgets/word_card.dart';
+import '../widgets/empty_state.dart';
+import '../widgets/suggestion_chip.dart';
 
 class TrangChu extends StatefulWidget {
   const TrangChu({super.key});
@@ -1014,6 +1017,747 @@ class _TrangChuState extends State<TrangChu> {
       ],
       "synonyms": ["Gaze", "Glance", "Stare"],
     },
+    {
+      "english": "Travel",
+      "phonetic": "/ˈtræv.əl/",
+      "type": "động từ",
+      "vietnamese": "Du lịch, đi lại",
+      "examples": [
+        {
+          "en": "I love to travel the world.",
+          "vi": "Tôi thích đi du lịch khắp thế giới.",
+        },
+        {"en": "They travel by train.", "vi": "Họ đi lại bằng tàu hỏa."},
+      ],
+      "idioms": [
+        {"en": "Travel light", "vi": "Đi nhẹ, mang ít đồ"},
+      ],
+      "synonyms": ["Journey", "Tour", "Roam"],
+    },
+    {
+      "english": "Weather",
+      "phonetic": "/ˈweð.ər/",
+      "type": "danh từ",
+      "vietnamese": "Thời tiết",
+      "examples": [
+        {
+          "en": "The weather is pleasant today.",
+          "vi": "Thời tiết hôm nay dễ chịu.",
+        },
+        {
+          "en": "Check the weather before you leave.",
+          "vi": "Kiểm tra thời tiết trước khi bạn đi.",
+        },
+      ],
+      "idioms": [
+        {"en": "Under the weather", "vi": "Cảm thấy mệt, không khỏe"},
+      ],
+      "synonyms": ["Climate", "Conditions"],
+    },
+    {
+      "english": "Teacher",
+      "phonetic": "/ˈtiː.tʃər/",
+      "type": "danh từ",
+      "vietnamese": "Giáo viên",
+      "examples": [
+        {
+          "en": "My teacher is very kind.",
+          "vi": "Giáo viên của tôi rất tốt bụng.",
+        },
+        {
+          "en": "Teachers inspire students.",
+          "vi": "Giáo viên truyền cảm hứng cho học sinh.",
+        },
+      ],
+      "idioms": [
+        {"en": "Teacher's pet", "vi": "Học trò cưng"},
+      ],
+      "synonyms": ["Instructor", "Educator", "Tutor"],
+    },
+    {
+      "english": "Student",
+      "phonetic": "/ˈstjuː.dənt/",
+      "type": "danh từ",
+      "vietnamese": "Học sinh, sinh viên",
+      "examples": [
+        {
+          "en": "She is a diligent student.",
+          "vi": "Cô ấy là một sinh viên chăm chỉ.",
+        },
+        {
+          "en": "Students are taking the exam.",
+          "vi": "Sinh viên đang làm bài kiểm tra.",
+        },
+      ],
+      "idioms": [
+        {"en": "Model student", "vi": "Học sinh gương mẫu"},
+      ],
+      "synonyms": ["Pupil", "Learner"],
+    },
+    {
+      "english": "Hospital",
+      "phonetic": "/ˈhɒs.pɪ.təl/",
+      "type": "danh từ",
+      "vietnamese": "Bệnh viện",
+      "examples": [
+        {
+          "en": "He works at the hospital.",
+          "vi": "Anh ấy làm việc ở bệnh viện.",
+        },
+        {
+          "en": "She was taken to the hospital.",
+          "vi": "Cô ấy được đưa đến bệnh viện.",
+        },
+      ],
+      "idioms": [
+        {"en": "Hospitality", "vi": "Lòng hiếu khách (khác nghĩa)"},
+      ],
+      "synonyms": ["Medical center", "Clinic"],
+    },
+    {
+      "english": "Airport",
+      "phonetic": "/ˈeə.pɔːt/",
+      "type": "danh từ",
+      "vietnamese": "Sân bay",
+      "examples": [
+        {
+          "en": "We arrived at the airport early.",
+          "vi": "Chúng tôi đến sân bay sớm.",
+        },
+        {"en": "The airport is very busy.", "vi": "Sân bay rất đông đúc."},
+      ],
+      "idioms": [
+        {"en": "Airport pickup", "vi": "Đón ở sân bay"},
+      ],
+      "synonyms": ["Airfield", "Terminal"],
+    },
+    {
+      "english": "Ticket",
+      "phonetic": "/ˈtɪk.ɪt/",
+      "type": "danh từ",
+      "vietnamese": "Vé",
+      "examples": [
+        {"en": "I bought a train ticket.", "vi": "Tôi đã mua một vé tàu."},
+        {"en": "Keep your ticket safe.", "vi": "Giữ vé của bạn cẩn thận."},
+      ],
+      "idioms": [
+        {"en": "Golden ticket", "vi": "Tấm vé vàng (cơ hội hiếm)"},
+      ],
+      "synonyms": ["Pass", "Voucher", "Coupon"],
+    },
+    {
+      "english": "Restaurant",
+      "phonetic": "/ˈres.trɒnt/",
+      "type": "danh từ",
+      "vietnamese": "Nhà hàng",
+      "examples": [
+        {
+          "en": "This restaurant serves Italian food.",
+          "vi": "Nhà hàng này phục vụ đồ ăn Ý.",
+        },
+        {
+          "en": "We booked a table at the restaurant.",
+          "vi": "Chúng tôi đã đặt bàn ở nhà hàng.",
+        },
+      ],
+      "idioms": [
+        {"en": "Restaurant week", "vi": "Tuần lễ nhà hàng (sự kiện)"},
+      ],
+      "synonyms": ["Eatery", "Dining place"],
+    },
+    {
+      "english": "Delicious",
+      "phonetic": "/dɪˈlɪʃ.əs/",
+      "type": "tính từ",
+      "vietnamese": "Ngon miệng",
+      "examples": [
+        {"en": "The soup is delicious.", "vi": "Món súp rất ngon."},
+        {"en": "What a delicious cake!", "vi": "Chiếc bánh thật ngon!"},
+      ],
+      "idioms": [
+        {"en": "Look delicious", "vi": "Trông ngon miệng"},
+      ],
+      "synonyms": ["Tasty", "Yummy", "Flavorful"],
+    },
+    {
+      "english": "Breakfast",
+      "phonetic": "/ˈbrek.fəst/",
+      "type": "danh từ",
+      "vietnamese": "Bữa sáng",
+      "examples": [
+        {
+          "en": "I usually have bread for breakfast.",
+          "vi": "Tôi thường ăn bánh mì cho bữa sáng.",
+        },
+        {
+          "en": "Breakfast is the most important meal.",
+          "vi": "Bữa sáng là bữa quan trọng nhất.",
+        },
+      ],
+      "idioms": [
+        {"en": "Breakfast of champions", "vi": "Bữa sáng của nhà vô địch"},
+      ],
+      "synonyms": ["Morning meal"],
+    },
+    {
+      "english": "Library",
+      "phonetic": "/ˈlaɪ.brər.i/",
+      "type": "danh từ",
+      "vietnamese": "Thư viện",
+      "examples": [
+        {
+          "en": "I borrowed a book from the library.",
+          "vi": "Tôi mượn sách từ thư viện.",
+        },
+        {"en": "The library is quiet.", "vi": "Thư viện yên tĩnh."},
+      ],
+      "idioms": [
+        {"en": "Library card", "vi": "Thẻ thư viện"},
+      ],
+      "synonyms": ["Bookroom", "Athenaeum"],
+    },
+    {
+      "english": "Keyboard",
+      "phonetic": "/ˈkiː.bɔːd/",
+      "type": "danh từ",
+      "vietnamese": "Bàn phím",
+      "examples": [
+        {"en": "The keyboard is wireless.", "vi": "Bàn phím không dây."},
+        {
+          "en": "Clean your keyboard regularly.",
+          "vi": "Vệ sinh bàn phím thường xuyên.",
+        },
+      ],
+      "idioms": [
+        {"en": "Keyboard warrior", "vi": "Anh hùng bàn phím"},
+      ],
+      "synonyms": ["Keypad"],
+    },
+    {
+      "english": "Screen",
+      "phonetic": "/skriːn/",
+      "type": "danh từ",
+      "vietnamese": "Màn hình",
+      "examples": [
+        {
+          "en": "Don't stare at the screen too long.",
+          "vi": "Đừng nhìn màn hình quá lâu.",
+        },
+        {
+          "en": "The phone screen cracked.",
+          "vi": "Màn hình điện thoại bị nứt.",
+        },
+      ],
+      "idioms": [
+        {"en": "On screen", "vi": "Trên màn ảnh"},
+      ],
+      "synonyms": ["Display", "Monitor"],
+    },
+    {
+      "english": "Battery",
+      "phonetic": "/ˈbæt.ər.i/",
+      "type": "danh từ",
+      "vietnamese": "Pin, ắc quy",
+      "examples": [
+        {
+          "en": "My phone battery is low.",
+          "vi": "Pin điện thoại của tôi sắp hết.",
+        },
+        {"en": "Charge the battery overnight.", "vi": "Sạc pin qua đêm."},
+      ],
+      "idioms": [
+        {"en": "Recharge your batteries", "vi": "Nạp lại năng lượng"},
+      ],
+      "synonyms": ["Cell", "Accumulator"],
+    },
+    {
+      "english": "Network",
+      "phonetic": "/ˈnet.wɜːk/",
+      "type": "danh từ",
+      "vietnamese": "Mạng lưới, mạng",
+      "examples": [
+        {
+          "en": "The Wi‑Fi network is unstable.",
+          "vi": "Mạng Wi‑Fi không ổn định.",
+        },
+        {
+          "en": "Build a professional network.",
+          "vi": "Xây dựng mạng lưới chuyên nghiệp.",
+        },
+      ],
+      "idioms": [
+        {"en": "Network effect", "vi": "Hiệu ứng mạng lưới"},
+      ],
+      "synonyms": ["Web", "Grid"],
+    },
+    {
+      "english": "Interview",
+      "phonetic": "/ˈɪn.tə.vjuː/",
+      "type": "danh từ",
+      "vietnamese": "Phỏng vấn",
+      "examples": [
+        {
+          "en": "I have a job interview tomorrow.",
+          "vi": "Tôi có buổi phỏng vấn xin việc vào ngày mai.",
+        },
+        {
+          "en": "The interview went well.",
+          "vi": "Buổi phỏng vấn diễn ra tốt đẹp.",
+        },
+      ],
+      "idioms": [
+        {"en": "Exit interview", "vi": "Phỏng vấn thôi việc"},
+      ],
+      "synonyms": ["Meeting", "Q&A"],
+    },
+    {
+      "english": "Salary",
+      "phonetic": "/ˈsæl.ər.i/",
+      "type": "danh từ",
+      "vietnamese": "Lương",
+      "examples": [
+        {
+          "en": "Her salary increased this year.",
+          "vi": "Lương của cô ấy tăng năm nay.",
+        },
+        {
+          "en": "They offer a competitive salary.",
+          "vi": "Họ đưa ra mức lương cạnh tranh.",
+        },
+      ],
+      "idioms": [
+        {"en": "On salary", "vi": "Hưởng lương cố định"},
+      ],
+      "synonyms": ["Wage", "Pay", "Income"],
+    },
+    {
+      "english": "Vacation",
+      "phonetic": "/vəˈkeɪ.ʃən/",
+      "type": "danh từ",
+      "vietnamese": "Kỳ nghỉ",
+      "examples": [
+        {
+          "en": "We are planning a summer vacation.",
+          "vi": "Chúng tôi đang lên kế hoạch cho kỳ nghỉ hè.",
+        },
+        {"en": "Enjoy your vacation!", "vi": "Chúc bạn có kỳ nghỉ vui vẻ!"},
+      ],
+      "idioms": [
+        {"en": "On vacation", "vi": "Đang đi nghỉ"},
+      ],
+      "synonyms": ["Holiday", "Break"],
+    },
+    {
+      "english": "Mountain",
+      "phonetic": "/ˈmaʊn.tɪn/",
+      "type": "danh từ",
+      "vietnamese": "Núi",
+      "examples": [
+        {"en": "They climbed the mountain.", "vi": "Họ đã leo núi."},
+        {
+          "en": "The mountain is covered with snow.",
+          "vi": "Ngọn núi phủ đầy tuyết.",
+        },
+      ],
+      "idioms": [
+        {
+          "en": "Make a mountain out of a molehill",
+          "vi": "Làm quá lên chuyện nhỏ",
+        },
+      ],
+      "synonyms": ["Peak", "Summit", "Hill"],
+    },
+    {
+      "english": "River",
+      "phonetic": "/ˈrɪv.ər/",
+      "type": "danh từ",
+      "vietnamese": "Sông",
+      "examples": [
+        {"en": "The river flows to the sea.", "vi": "Con sông chảy ra biển."},
+        {
+          "en": "We had a picnic by the river.",
+          "vi": "Chúng tôi dã ngoại bên bờ sông.",
+        },
+      ],
+      "idioms": [
+        {"en": "Sell down the river", "vi": "Phản bội"},
+      ],
+      "synonyms": ["Stream", "Waterway"],
+    },
+    {
+      "english": "Ocean",
+      "phonetic": "/ˈəʊ.ʃən/",
+      "type": "danh từ",
+      "vietnamese": "Đại dương",
+      "examples": [
+        {"en": "The ocean is vast.", "vi": "Đại dương bao la."},
+        {"en": "We swam in the ocean.", "vi": "Chúng tôi bơi ở đại dương."},
+      ],
+      "idioms": [
+        {"en": "A drop in the ocean", "vi": "Muối bỏ biển"},
+      ],
+      "synonyms": ["Sea", "Blue"],
+    },
+    {
+      "english": "Island",
+      "phonetic": "/ˈaɪ.lənd/",
+      "type": "danh từ",
+      "vietnamese": "Hòn đảo",
+      "examples": [
+        {
+          "en": "They live on a small island.",
+          "vi": "Họ sống trên một hòn đảo nhỏ.",
+        },
+        {"en": "The island is beautiful.", "vi": "Hòn đảo rất đẹp."},
+      ],
+      "idioms": [
+        {"en": "No man is an island", "vi": "Không ai là một ốc đảo"},
+      ],
+      "synonyms": ["Isle", "Islet"],
+    },
+    {
+      "english": "Forest",
+      "phonetic": "/ˈfɒr.ɪst/",
+      "type": "danh từ",
+      "vietnamese": "Khu rừng",
+      "examples": [
+        {"en": "The forest is dense.", "vi": "Khu rừng rậm rạp."},
+        {
+          "en": "We camped in the forest.",
+          "vi": "Chúng tôi cắm trại trong rừng.",
+        },
+      ],
+      "idioms": [
+        {
+          "en": "Can't see the forest for the trees",
+          "vi": "Không thấy rừng vì mải nhìn cây",
+        },
+      ],
+      "synonyms": ["Woods", "Jungle"],
+    },
+    {
+      "english": "City",
+      "phonetic": "/ˈsɪt.i/",
+      "type": "danh từ",
+      "vietnamese": "Thành phố",
+      "examples": [
+        {
+          "en": "Hanoi is a busy city.",
+          "vi": "Hà Nội là một thành phố nhộn nhịp.",
+        },
+        {"en": "The city never sleeps.", "vi": "Thành phố không bao giờ ngủ."},
+      ],
+      "idioms": [
+        {"en": "City limits", "vi": "Ranh giới thành phố"},
+      ],
+      "synonyms": ["Metropolis", "Urban area"],
+    },
+    {
+      "english": "Village",
+      "phonetic": "/ˈvɪl.ɪdʒ/",
+      "type": "danh từ",
+      "vietnamese": "Làng",
+      "examples": [
+        {
+          "en": "My grandparents live in a village.",
+          "vi": "Ông bà tôi sống ở một ngôi làng.",
+        },
+        {"en": "The village is peaceful.", "vi": "Ngôi làng yên bình."},
+      ],
+      "idioms": [
+        {"en": "Global village", "vi": "Làng toàn cầu"},
+      ],
+      "synonyms": ["Hamlet", "Rural community"],
+    },
+    {
+      "english": "Market",
+      "phonetic": "/ˈmɑː.kɪt/",
+      "type": "danh từ",
+      "vietnamese": "Chợ, thị trường",
+      "examples": [
+        {
+          "en": "We bought vegetables at the market.",
+          "vi": "Chúng tôi mua rau ở chợ.",
+        },
+        {"en": "The market is competitive.", "vi": "Thị trường cạnh tranh."},
+      ],
+      "idioms": [
+        {"en": "Market share", "vi": "Thị phần"},
+      ],
+      "synonyms": ["Bazaar", "Marketplace"],
+    },
+    {
+      "english": "Train",
+      "phonetic": "/treɪn/",
+      "type": "danh từ",
+      "vietnamese": "Tàu hỏa; (v) đào tạo",
+      "examples": [
+        {"en": "The train arrives at 9 AM.", "vi": "Tàu đến lúc 9 giờ sáng."},
+        {
+          "en": "We train new employees.",
+          "vi": "Chúng tôi đào tạo nhân viên mới.",
+        },
+      ],
+      "idioms": [
+        {"en": "Train of thought", "vi": "Mạch suy nghĩ"},
+      ],
+      "synonyms": ["Rail", "Coach", "Educate"],
+    },
+    {
+      "english": "Flight",
+      "phonetic": "/flaɪt/",
+      "type": "danh từ",
+      "vietnamese": "Chuyến bay",
+      "examples": [
+        {
+          "en": "Our flight was delayed.",
+          "vi": "Chuyến bay của chúng tôi bị hoãn.",
+        },
+        {"en": "The flight takes two hours.", "vi": "Chuyến bay mất hai giờ."},
+      ],
+      "idioms": [
+        {"en": "Take flight", "vi": "Bỏ chạy, bay đi"},
+      ],
+      "synonyms": ["Air trip", "Journey"],
+    },
+    {
+      "english": "Appointment",
+      "phonetic": "/əˈpɔɪnt.mənt/",
+      "type": "danh từ",
+      "vietnamese": "Cuộc hẹn",
+      "examples": [
+        {
+          "en": "I have a dentist appointment.",
+          "vi": "Tôi có cuộc hẹn với nha sĩ.",
+        },
+        {
+          "en": "Please confirm your appointment.",
+          "vi": "Vui lòng xác nhận cuộc hẹn.",
+        },
+      ],
+      "idioms": [
+        {"en": "Keep an appointment", "vi": "Giữ đúng cuộc hẹn"},
+      ],
+      "synonyms": ["Meeting", "Arrangement"],
+    },
+    {
+      "english": "Medicine",
+      "phonetic": "/ˈmed.ɪ.sɪn/",
+      "type": "danh từ",
+      "vietnamese": "Thuốc; y học",
+      "examples": [
+        {
+          "en": "Take your medicine after meals.",
+          "vi": "Uống thuốc sau bữa ăn.",
+        },
+        {"en": "She studies medicine.", "vi": "Cô ấy học ngành y."},
+      ],
+      "idioms": [
+        {"en": "A bitter pill to swallow", "vi": "Sự thật khó chấp nhận"},
+      ],
+      "synonyms": ["Drug", "Treatment"],
+    },
+    {
+      "english": "Healthy",
+      "phonetic": "/ˈhel.θi/",
+      "type": "tính từ",
+      "vietnamese": "Khỏe mạnh, lành mạnh",
+      "examples": [
+        {"en": "Eat a healthy diet.", "vi": "Ăn uống lành mạnh."},
+        {"en": "She is very healthy.", "vi": "Cô ấy rất khỏe mạnh."},
+      ],
+      "idioms": [
+        {"en": "Healthy appetite", "vi": "Ăn khỏe"},
+      ],
+      "synonyms": ["Fit", "Well", "Robust"],
+    },
+    {
+      "english": "Dangerous",
+      "phonetic": "/ˈdeɪn.dʒər.əs/",
+      "type": "tính từ",
+      "vietnamese": "Nguy hiểm",
+      "examples": [
+        {
+          "en": "Driving fast is dangerous.",
+          "vi": "Lái xe nhanh rất nguy hiểm.",
+        },
+        {"en": "The sea can be dangerous.", "vi": "Biển có thể nguy hiểm."},
+      ],
+      "idioms": [
+        {"en": "Flirt with danger", "vi": "Đùa với nguy hiểm"},
+      ],
+      "synonyms": ["Risky", "Hazardous", "Unsafe"],
+    },
+    {
+      "english": "Careful",
+      "phonetic": "/ˈkeə.fəl/",
+      "type": "tính từ",
+      "vietnamese": "Cẩn thận",
+      "examples": [
+        {
+          "en": "Be careful when crossing the street.",
+          "vi": "Hãy cẩn thận khi băng qua đường.",
+        },
+        {
+          "en": "He is careful with money.",
+          "vi": "Anh ấy cẩn thận trong chi tiêu.",
+        },
+      ],
+      "idioms": [
+        {"en": "Handle with care", "vi": "Xin nhẹ tay (cẩn thận)"},
+      ],
+      "synonyms": ["Cautious", "Prudent"],
+    },
+    {
+      "english": "Quick",
+      "phonetic": "/kwɪk/",
+      "type": "tính từ",
+      "vietnamese": "Nhanh",
+      "examples": [
+        {"en": "He is quick to learn.", "vi": "Anh ấy học nhanh."},
+        {
+          "en": "We need a quick decision.",
+          "vi": "Chúng ta cần quyết định nhanh.",
+        },
+      ],
+      "idioms": [
+        {"en": "Quick on the draw", "vi": "Phản ứng nhanh"},
+      ],
+      "synonyms": ["Fast", "Rapid", "Swift"],
+    },
+    {
+      "english": "Slow",
+      "phonetic": "/sləʊ/",
+      "type": "tính từ",
+      "vietnamese": "Chậm",
+      "examples": [
+        {"en": "The internet is slow today.", "vi": "Internet hôm nay chậm."},
+        {"en": "He walks slow in the rain.", "vi": "Anh ấy đi chậm trong mưa."},
+      ],
+      "idioms": [
+        {"en": "On the slow side", "vi": "Hơi chậm"},
+      ],
+      "synonyms": ["Sluggish", "Leisurely"],
+    },
+    {
+      "english": "Expensive",
+      "phonetic": "/ɪkˈspen.sɪv/",
+      "type": "tính từ",
+      "vietnamese": "Đắt đỏ",
+      "examples": [
+        {"en": "This bag is expensive.", "vi": "Chiếc túi này đắt."},
+        {
+          "en": "Eating out can be expensive.",
+          "vi": "Ăn ngoài có thể tốn kém.",
+        },
+      ],
+      "idioms": [
+        {"en": "Pay through the nose", "vi": "Trả giá cắt cổ"},
+      ],
+      "synonyms": ["Costly", "Pricey"],
+    },
+    {
+      "english": "Cheap",
+      "phonetic": "/tʃiːp/",
+      "type": "tính từ",
+      "vietnamese": "Rẻ",
+      "examples": [
+        {"en": "These shoes are cheap.", "vi": "Đôi giày này rẻ."},
+        {
+          "en": "Cheap doesn't always mean bad.",
+          "vi": "Rẻ không phải lúc nào cũng xấu.",
+        },
+      ],
+      "idioms": [
+        {"en": "Cheap and cheerful", "vi": "Rẻ mà ổn"},
+      ],
+      "synonyms": ["Inexpensive", "Low-cost"],
+    },
+    {
+      "english": "Important",
+      "phonetic": "/ɪmˈpɔː.tənt/",
+      "type": "tính từ",
+      "vietnamese": "Quan trọng",
+      "examples": [
+        {"en": "It's important to sleep well.", "vi": "Ngủ đủ rất quan trọng."},
+        {
+          "en": "This is an important document.",
+          "vi": "Đây là tài liệu quan trọng.",
+        },
+      ],
+      "idioms": [
+        {"en": "Of great importance", "vi": "Rất quan trọng"},
+      ],
+      "synonyms": ["Significant", "Crucial", "Vital"],
+    },
+    {
+      "english": "Interesting",
+      "phonetic": "/ˈɪn.trəs.tɪŋ/",
+      "type": "tính từ",
+      "vietnamese": "Thú vị",
+      "examples": [
+        {"en": "The film was interesting.", "vi": "Bộ phim rất thú vị."},
+        {
+          "en": "He told an interesting story.",
+          "vi": "Anh ấy kể một câu chuyện thú vị.",
+        },
+      ],
+      "idioms": [
+        {"en": "Interestingly enough", "vi": "Thú vị là"},
+      ],
+      "synonyms": ["Engaging", "Fascinating", "Captivating"],
+    },
+    {
+      "english": "Boring",
+      "phonetic": "/ˈbɔː.rɪŋ/",
+      "type": "tính từ",
+      "vietnamese": "Nhàm chán",
+      "examples": [
+        {"en": "The lecture was boring.", "vi": "Bài giảng thật nhàm chán."},
+        {"en": "I find this game boring.", "vi": "Tôi thấy trò chơi này chán."},
+      ],
+      "idioms": [
+        {"en": "Bored to death", "vi": "Chán chết đi được"},
+      ],
+      "synonyms": ["Dull", "Tedious"],
+    },
+    {
+      "english": "Celebrate",
+      "phonetic": "/ˈsel.ə.breɪt/",
+      "type": "động từ",
+      "vietnamese": "Ăn mừng, kỷ niệm",
+      "examples": [
+        {
+          "en": "We celebrate New Year together.",
+          "vi": "Chúng tôi đón năm mới cùng nhau.",
+        },
+        {
+          "en": "Let's celebrate your success.",
+          "vi": "Hãy ăn mừng thành công của bạn.",
+        },
+      ],
+      "idioms": [
+        {"en": "In a celebratory mood", "vi": "Trong tâm trạng ăn mừng"},
+      ],
+      "synonyms": ["Commemorate", "Rejoice"],
+    },
+    {
+      "english": "Surprise",
+      "phonetic": "/səˈpraɪz/",
+      "type": "danh từ; động từ",
+      "vietnamese": "Bất ngờ; làm bất ngờ",
+      "examples": [
+        {"en": "What a nice surprise!", "vi": "Thật là một bất ngờ dễ chịu!"},
+        {
+          "en": "They surprised me with a gift.",
+          "vi": "Họ làm tôi bất ngờ với một món quà.",
+        },
+      ],
+      "idioms": [
+        {"en": "Take by surprise", "vi": "Làm ai bất ngờ"},
+      ],
+      "synonyms": ["Astonish", "Amaze", "Shock"],
+    },
   ];
 
   Future<void> _speak(String text) async {
@@ -1138,160 +1882,120 @@ class _TrangChuState extends State<TrangChu> {
                       // Hiển thị thông báo khác nhau tùy theo có đang tìm kiếm hay không
                       if (_searchQuery.isEmpty) {
                         // Chưa nhập gì -> hiển thị lời nhắc tìm kiếm
-                        return Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(32.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                // Icon với gradient background
-                                Container(
-                                  width: 120,
-                                  height: 120,
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      colors: [
-                                        themeColor.withOpacity(0.2),
-                                        themeColor.withOpacity(0.1),
-                                      ],
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                    ),
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Icon(
-                                    Icons.search,
-                                    size: 60,
-                                    color: themeColor,
-                                  ),
+                        return EmptyStateWidget(
+                          icon: Icons.search,
+                          title: "search_prompt".tr(),
+                          subtitle: "search_hint".tr(),
+                          iconColor: themeColor,
+                          gradientColors: [
+                            themeColor.withOpacity(0.2),
+                            themeColor.withOpacity(0.1),
+                          ],
+                          iconSize: 60,
+                          actionButton: Column(
+                            children: [
+                              Text(
+                                "popular_words".tr(),
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: textColor.withOpacity(0.7),
                                 ),
-                                const SizedBox(height: 30),
-                                // Text chính
-                                Text(
-                                  "search_prompt".tr(),
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w600,
-                                    color: textColor,
+                              ),
+                              const SizedBox(height: 16),
+                              Wrap(
+                                spacing: 10,
+                                runSpacing: 10,
+                                alignment: WrapAlignment.center,
+                                children: [
+                                  SuggestionChip(
+                                    word: 'Hello',
+                                    themeColor: themeColor,
+                                    onTap: () {
+                                      setState(() {
+                                        _searchController.text = 'Hello';
+                                        _searchQuery = 'Hello';
+                                      });
+                                    },
                                   ),
-                                  textAlign: TextAlign.center,
-                                ),
-                                const SizedBox(height: 12),
-                                // Text phụ
-                                Text(
-                                  "search_hint".tr(),
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: textColor.withOpacity(0.6),
+                                  SuggestionChip(
+                                    word: 'Book',
+                                    themeColor: themeColor,
+                                    onTap: () {
+                                      setState(() {
+                                        _searchController.text = 'Book';
+                                        _searchQuery = 'Book';
+                                      });
+                                    },
                                   ),
-                                  textAlign: TextAlign.center,
-                                ),
-                                const SizedBox(height: 40),
-                                // Gợi ý từ khóa phổ biến
-                                Text(
-                                  "popular_words".tr(),
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                    color: textColor.withOpacity(0.7),
+                                  SuggestionChip(
+                                    word: 'Happy',
+                                    themeColor: themeColor,
+                                    onTap: () {
+                                      setState(() {
+                                        _searchController.text = 'Happy';
+                                        _searchQuery = 'Happy';
+                                      });
+                                    },
                                   ),
-                                ),
-                                const SizedBox(height: 16),
-                                Wrap(
-                                  spacing: 10,
-                                  runSpacing: 10,
-                                  alignment: WrapAlignment.center,
-                                  children: [
-                                    _buildSuggestionChip('Hello', themeColor),
-                                    _buildSuggestionChip('Book', themeColor),
-                                    _buildSuggestionChip('Happy', themeColor),
-                                    _buildSuggestionChip('Learn', themeColor),
-                                    _buildSuggestionChip(
-                                      'Beautiful',
-                                      themeColor,
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
+                                  SuggestionChip(
+                                    word: 'Learn',
+                                    themeColor: themeColor,
+                                    onTap: () {
+                                      setState(() {
+                                        _searchController.text = 'Learn';
+                                        _searchQuery = 'Learn';
+                                      });
+                                    },
+                                  ),
+                                  SuggestionChip(
+                                    word: 'Beautiful',
+                                    themeColor: themeColor,
+                                    onTap: () {
+                                      setState(() {
+                                        _searchController.text = 'Beautiful';
+                                        _searchQuery = 'Beautiful';
+                                      });
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         );
                       } else {
                         // Đã nhập nhưng không có kết quả
-                        return Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(32.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                // Icon với gradient background
-                                Container(
-                                  width: 120,
-                                  height: 120,
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      colors: [
-                                        Colors.orange.withOpacity(0.2),
-                                        Colors.orange.withOpacity(0.1),
-                                      ],
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                    ),
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: const Icon(
-                                    Icons.search_off,
-                                    size: 60,
-                                    color: Colors.orange,
-                                  ),
-                                ),
-                                const SizedBox(height: 30),
-                                // Text chính
-                                Text(
-                                  "no_results".tr(),
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w600,
-                                    color: textColor,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                                const SizedBox(height: 12),
-                                // Text phụ với từ khóa tìm kiếm
-                                Text(
-                                  "no_results_hint".tr(
-                                    namedArgs: {"query": _searchQuery},
-                                  ),
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: textColor.withOpacity(0.6),
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                                const SizedBox(height: 24),
-                                // Nút clear search
-                                ElevatedButton.icon(
-                                  onPressed: () {
-                                    setState(() {
-                                      _searchController.clear();
-                                      _searchQuery = "";
-                                    });
-                                  },
-                                  icon: const Icon(Icons.clear),
-                                  label: Text("clear_search".tr()),
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: themeColor,
-                                    foregroundColor: Colors.white,
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 24,
-                                      vertical: 12,
-                                    ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(25),
-                                    ),
-                                  ),
-                                ),
-                              ],
+                        return EmptyStateWidget(
+                          icon: Icons.search_off,
+                          title: "no_results".tr(),
+                          subtitle: "no_results_hint".tr(
+                            namedArgs: {"query": _searchQuery},
+                          ),
+                          iconColor: Colors.orange,
+                          gradientColors: [
+                            Colors.orange.withOpacity(0.2),
+                            Colors.orange.withOpacity(0.1),
+                          ],
+                          iconSize: 60,
+                          actionButton: ElevatedButton.icon(
+                            onPressed: () {
+                              setState(() {
+                                _searchController.clear();
+                                _searchQuery = "";
+                              });
+                            },
+                            icon: const Icon(Icons.clear),
+                            label: Text("clear_search".tr()),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: themeColor,
+                              foregroundColor: Colors.white,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 24,
+                                vertical: 12,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(25),
+                              ),
                             ),
                           ),
                         );
@@ -1401,7 +2105,13 @@ class _TrangChuState extends State<TrangChu> {
                                 final result = await Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (_) => ChiTiet(word: word),
+                                    builder: (_) => ChiTiet(
+                                      word: word,
+                                      onFavoriteChanged: () {
+                                        // Reload favorites khi có thay đổi
+                                        _loadFavorites();
+                                      },
+                                    ),
                                   ),
                                 );
 
@@ -1499,15 +2209,20 @@ class _TrangChuState extends State<TrangChu> {
       final favoriteWordsList = _words
           .where((word) => _favoriteWords.contains(word["english"]))
           .toList();
-      return FavoritesTab(
+      return TuCuaBan(
         favoriteWordsList: favoriteWordsList,
         onSpeak: _speak,
         onToggleFavorite: _toggleFavorite,
+        themeColor: _getThemeColor(),
+        isDarkMode: _isDarkMode,
+        onFavoritesChanged: () {
+          _loadFavorites();
+        },
       );
     }
     // ⚙️ Trang "Cài đặt"
     else {
-      return SettingsTab(
+      return CaiDat(
         isDarkMode: _isDarkMode,
         fontSize: _fontSize,
         themeColor: _getThemeColor(),
@@ -1547,33 +2262,6 @@ class _TrangChuState extends State<TrangChu> {
   }
 
   // Widget helper cho suggestion chips
-  Widget _buildSuggestionChip(String word, Color themeColor) {
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          _searchController.text = word;
-          _searchQuery = word;
-        });
-      },
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        decoration: BoxDecoration(
-          color: themeColor.withOpacity(0.1),
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: themeColor.withOpacity(0.3), width: 1),
-        ),
-        child: Text(
-          word,
-          style: TextStyle(
-            color: themeColor,
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ),
-    );
-  }
-
   Widget _buildSettingsCard({
     required Color cardColor,
     required Color textColor,

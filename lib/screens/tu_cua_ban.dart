@@ -2,34 +2,35 @@ import 'package:flutter/material.dart';
 import 'chi_tiet.dart';
 import 'flashcard.dart';
 import 'package:easy_localization/easy_localization.dart';
+import '../widgets/empty_state.dart';
+import '../widgets/word_card.dart';
 
-class FavoritesTab extends StatelessWidget {
+class TuCuaBan extends StatelessWidget {
   final List<Map<String, dynamic>> favoriteWordsList;
   final Function(String) onSpeak;
   final Function(String) onToggleFavorite;
+  final VoidCallback? onFavoritesChanged; // Callback để reload
+  final Color themeColor;
+  final bool isDarkMode;
 
-  const FavoritesTab({
+  const TuCuaBan({
     super.key,
     required this.favoriteWordsList,
     required this.onSpeak,
     required this.onToggleFavorite,
+    this.onFavoritesChanged,
+    this.themeColor = Colors.deepPurple,
+    this.isDarkMode = false,
   });
 
   @override
   Widget build(BuildContext context) {
     if (favoriteWordsList.isEmpty) {
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(Icons.star_border, size: 80, color: Colors.grey),
-            const SizedBox(height: 20),
-            Text(
-              "no_favorites".tr(),
-              style: const TextStyle(fontSize: 18, color: Colors.grey),
-            ),
-          ],
-        ),
+      return EmptyStateWidget(
+        icon: Icons.star_border,
+        title: "no_favorites".tr(),
+        iconColor: Colors.grey,
+        iconSize: 80,
       );
     }
     return Padding(
@@ -93,87 +94,29 @@ class FavoritesTab extends StatelessWidget {
                 itemCount: favoriteWordsList.length,
                 itemBuilder: (context, index) {
                   final word = favoriteWordsList[index];
-                  return Card(
-                    color: Colors.white,
-                    elevation: 3,
-                    margin: const EdgeInsets.symmetric(
-                      vertical: 8,
-                      horizontal: 4,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: ListTile(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => ChiTiet(word: word),
+                  return WordCard(
+                    word: word,
+                    isFavorite: true, // Tất cả từ ở đây đều là favorite
+                    themeColor: themeColor,
+                    textColor: isDarkMode ? Colors.white : Colors.black87,
+                    isDarkMode: isDarkMode,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => ChiTiet(
+                            word: word,
+                            onFavoriteChanged: onFavoritesChanged,
                           ),
-                        );
-                      },
-                      title: Text(
-                        word["english"] ?? "",
-                        style: const TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
                         ),
-                      ),
-                      subtitle: Padding(
-                        padding: const EdgeInsets.only(top: 4),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "${'phonetic_label'.tr()} ${word['phonetic']}",
-                              style: const TextStyle(fontSize: 14),
-                            ),
-                            const SizedBox(height: 4),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 8,
-                                vertical: 2,
-                              ),
-                              decoration: BoxDecoration(
-                                color: Colors.lightGreen,
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Text(
-                                word["type"] ?? "",
-                                style: const TextStyle(fontSize: 12),
-                              ),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              word["vietnamese"] ?? "",
-                              style: const TextStyle(
-                                color: Colors.black87,
-                                fontSize: 15,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          IconButton(
-                            icon: const Icon(Icons.star, color: Colors.orange),
-                            onPressed: () {
-                              onToggleFavorite(word["english"]!);
-                            },
-                          ),
-                          IconButton(
-                            icon: const Icon(
-                              Icons.volume_up,
-                              color: Colors.deepPurple,
-                            ),
-                            onPressed: () => onSpeak(word["english"]!),
-                          ),
-                        ],
-                      ),
-                    ),
+                      );
+                    },
+                    onFavoriteToggle: () {
+                      onToggleFavorite(word["english"]!);
+                    },
+                    onSpeak: () {
+                      onSpeak(word["english"]!);
+                    },
                   );
                 },
               ),

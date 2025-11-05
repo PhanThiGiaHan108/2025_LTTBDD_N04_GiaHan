@@ -27,10 +27,7 @@ class ChicktionaryApp extends StatelessWidget {
     return MaterialApp(
       title: 'Chicktionary',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        fontFamily: 'Itim',
-        scaffoldBackgroundColor: const Color(0xFFFFFDE5),
-      ),
+      theme: ThemeData(scaffoldBackgroundColor: const Color(0xFFFFFDE5)),
       home: const Logo(),
 
       localizationsDelegates: context.localizationDelegates,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'dang_ky.dart';
 import 'trang_chu.dart';
+import '../widgets/password_field.dart';
 
 class DangNhap extends StatefulWidget {
   const DangNhap({super.key});
@@ -14,9 +15,6 @@ class _DangNhapState extends State<DangNhap> {
   // 🎯 Controller để lấy giá trị từ TextField
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-
-  // 👁️ Biến để ẩn/hiện mật khẩu
-  bool _obscurePassword = true;
 
   // 🧩 Hàm đăng nhập (tài khoản cứng)
   void _login() {
@@ -161,9 +159,11 @@ class _DangNhapState extends State<DangNhap> {
                             controller: emailController,
                           ),
                           const SizedBox(height: 15),
-                          _buildPasswordInput(
-                            'password_hint'.tr(),
+                          PasswordField(
                             controller: passwordController,
+                            labelText: '',
+                            hintText: 'password_hint'.tr(),
+                            prefixIcon: Icons.lock,
                           ),
                           const SizedBox(height: 25),
 
@@ -298,44 +298,7 @@ class _DangNhapState extends State<DangNhap> {
     );
   }
 
-  // 🔐 Widget mật khẩu với nút ẩn/hiện
-  Widget _buildPasswordInput(String hint, {TextEditingController? controller}) {
-    return TextField(
-      controller: controller,
-      obscureText: _obscurePassword,
-      decoration: InputDecoration(
-        hintText: hint,
-        filled: true,
-        fillColor: Colors.white,
-        hintStyle: const TextStyle(color: Colors.grey),
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 14,
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
-          borderSide: const BorderSide(color: Colors.grey, width: 0.6),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
-          borderSide: const BorderSide(color: Color(0xFF9C27B0), width: 1.5),
-        ),
-        suffixIcon: IconButton(
-          icon: Icon(
-            _obscurePassword ? Icons.visibility_off : Icons.visibility,
-            color: Colors.grey,
-          ),
-          onPressed: () {
-            setState(() {
-              _obscurePassword = !_obscurePassword;
-            });
-          },
-        ),
-      ),
-    );
-  }
-
-  // 💬 Dialog quên mật khẩu
+  //  Dialog quên mật khẩu
   void _showForgotPasswordDialog() {
     final TextEditingController forgotEmailController = TextEditingController();
 

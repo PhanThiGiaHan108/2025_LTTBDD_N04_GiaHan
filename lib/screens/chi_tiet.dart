@@ -4,8 +4,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ChiTiet extends StatefulWidget {
   final Map<String, dynamic> word;
+  final VoidCallback? onFavoriteChanged; // Callback để notify parent
 
-  const ChiTiet({super.key, required this.word});
+  const ChiTiet({super.key, required this.word, this.onFavoriteChanged});
 
   @override
   State<ChiTiet> createState() => _ChiTietState();
@@ -44,6 +45,26 @@ class _ChiTietState extends State<ChiTiet> {
     });
 
     await prefs.setStringList('favorite_words', favorites);
+
+    // Notify parent về thay đổi
+    if (widget.onFavoriteChanged != null) {
+      widget.onFavoriteChanged!();
+    }
+
+    // Hiển thị snackbar
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            _isFavorite
+                ? 'Đã thêm "${widget.word["english"]}" vào yêu thích'
+                : 'Đã xóa "${widget.word["english"]}" khỏi yêu thích',
+          ),
+          duration: const Duration(seconds: 2),
+          backgroundColor: _isFavorite ? Colors.green : Colors.orange,
+        ),
+      );
+    }
   }
 
   Future<void> _speak(String text) async {
