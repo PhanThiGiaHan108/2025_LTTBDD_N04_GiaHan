@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:confetti/confetti.dart';
 import 'dart:math';
 
 class FlashcardScreen extends StatefulWidget {
@@ -14,6 +16,7 @@ class FlashcardScreen extends StatefulWidget {
 
 class _FlashcardScreenState extends State<FlashcardScreen> {
   final FlutterTts tts = FlutterTts();
+  late ConfettiController _confettiController;
   int _currentIndex = 0;
   bool _showVietnamese = false;
   List<Map<String, dynamic>> _shuffledWords = [];
@@ -21,7 +24,16 @@ class _FlashcardScreenState extends State<FlashcardScreen> {
   @override
   void initState() {
     super.initState();
+    _confettiController = ConfettiController(
+      duration: const Duration(seconds: 3),
+    );
     _shuffleWords();
+  }
+
+  @override
+  void dispose() {
+    _confettiController.dispose();
+    super.dispose();
   }
 
   void _shuffleWords() {
@@ -55,22 +67,78 @@ class _FlashcardScreenState extends State<FlashcardScreen> {
     });
   }
 
+  Future<void> _saveLearnedWords() async {
+    final prefs = await SharedPreferences.getInstance();
+    final learnedWords = prefs.getStringList('learned_words') ?? [];
+
+    // Thêm các từ mới vào danh sách đã học (không trùng lặp)
+    for (var word in _shuffledWords) {
+      final englishWord = word['english'] as String;
+      if (!learnedWords.contains(englishWord)) {
+        learnedWords.add(englishWord);
+      }
+    }
+
+    await prefs.setStringList('learned_words', learnedWords);
+  }
+
   void _showCompletionDialog() {
+    // Lưu từ đã học khi hoàn thành flashcard
+    _saveLearnedWords();
+
+    // Tung pháo hoa
+    _confettiController.play();
+
     showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (context) => AlertDialog(
-        title: Text("flashcard_complete".tr()),
-        content: Text("flashcard_complete_message".tr()),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        title: Row(
+          children: [
+            const Icon(Icons.celebration, color: Colors.amber, size: 30),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Text(
+                "flashcard_complete".tr(),
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.deepPurple,
+                ),
+              ),
+            ),
+          ],
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(Icons.emoji_events, size: 80, color: Colors.amber),
+            const SizedBox(height: 16),
+            Text(
+              "flashcard_complete_message".tr(),
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 16),
+            ),
+          ],
+        ),
         actions: [
-          TextButton(
+          OutlinedButton.icon(
             onPressed: () {
+              _confettiController.stop();
               Navigator.pop(context);
               Navigator.pop(context);
             },
-            child: Text("exit".tr()),
+            icon: const Icon(Icons.exit_to_app),
+            label: Text("exit".tr()),
+            style: OutlinedButton.styleFrom(
+              foregroundColor: Colors.grey,
+              side: const BorderSide(color: Colors.grey),
+            ),
           ),
-          TextButton(
+          ElevatedButton.icon(
             onPressed: () {
+              _confettiController.stop();
               Navigator.pop(context);
               setState(() {
                 _currentIndex = 0;
@@ -78,7 +146,15 @@ class _FlashcardScreenState extends State<FlashcardScreen> {
                 _shuffleWords();
               });
             },
-            child: Text("restart".tr()),
+            icon: const Icon(Icons.refresh),
+            label: Text("restart".tr()),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.deepPurple,
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
           ),
         ],
       ),
@@ -370,6 +446,29 @@ class _FlashcardScreenState extends State<FlashcardScreen> {
               ),
             ],
           ),
+        ),
+      ),
+      // Confetti overlay
+      floatingActionButton: Align(
+        alignment: Alignment.topCenter,
+        child: ConfettiWidget(
+          confettiController: _confettiController,
+          blastDirection: pi / 2, // Xuống từ trên
+          maxBlastForce: 5,
+          minBlastForce: 2,
+          emissionFrequency: 0.05,
+          numberOfParticles: 50,
+          gravity: 0.3,
+          shouldLoop: false,
+          colors: const [
+            Colors.amber,
+            Colors.purple,
+            Colors.pink,
+            Colors.blue,
+            Colors.green,
+            Colors.orange,
+            Colors.red,
+          ],
         ),
       ),
     );

@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'dang_nhap.dart';
 import 've_chung_toi.dart';
+import 'ho_so.dart';
 
 class CaiDat extends StatelessWidget {
   final bool isDarkMode;
-  final double fontSize;
   final Color themeColor;
   final Function(bool) onDarkModeChanged;
-  final Function(double) onFontSizeChanged;
   final Function(Color) onThemeColorChanged;
   final Function(Locale) onLocaleChanged;
   final Locale currentLocale;
@@ -16,10 +15,8 @@ class CaiDat extends StatelessWidget {
   const CaiDat({
     super.key,
     required this.isDarkMode,
-    required this.fontSize,
     required this.themeColor,
     required this.onDarkModeChanged,
-    required this.onFontSizeChanged,
     required this.onThemeColorChanged,
     required this.onLocaleChanged,
     required this.currentLocale,
@@ -36,13 +33,63 @@ class CaiDat extends StatelessWidget {
           child: Text(
             'settings'.tr(),
             style: TextStyle(
-              fontSize: 24 * fontSize,
+              fontSize: 24,
               fontWeight: FontWeight.bold,
               color: textColor,
             ),
           ),
         ),
         const SizedBox(height: 30),
+        // Account / Profile
+        _buildSettingsCard(
+          cardColor: cardColor,
+          textColor: textColor,
+          themeColor: themeColor,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Icon(Icons.person, color: themeColor),
+                  const SizedBox(width: 10),
+                  Text(
+                    "profile".tr(),
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: textColor,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: CircleAvatar(
+                  backgroundColor: themeColor.withOpacity(0.12),
+                  child: Icon(Icons.person, color: themeColor),
+                ),
+                title: Text(
+                  "my_profile".tr(args: []),
+                  style: TextStyle(color: textColor),
+                ),
+                trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => ProfileScreen(
+                        themeColor: themeColor,
+                        isDarkMode: isDarkMode,
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 20),
         // Language
         _buildSettingsCard(
           cardColor: cardColor,
@@ -58,7 +105,7 @@ class CaiDat extends StatelessWidget {
                   Text(
                     "language".tr(),
                     style: TextStyle(
-                      fontSize: 18 * fontSize,
+                      fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: textColor,
                     ),
@@ -80,7 +127,7 @@ class CaiDat extends StatelessWidget {
                   isExpanded: true,
                   underline: const SizedBox(),
                   dropdownColor: cardColor,
-                  style: TextStyle(color: textColor, fontSize: 16 * fontSize),
+                  style: TextStyle(color: textColor, fontSize: 16),
                   onChanged: (Locale? newLocale) {
                     if (newLocale != null) onLocaleChanged(newLocale);
                   },
@@ -121,7 +168,7 @@ class CaiDat extends StatelessWidget {
                   Text(
                     "appearance".tr(),
                     style: TextStyle(
-                      fontSize: 18 * fontSize,
+                      fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: textColor,
                     ),
@@ -134,13 +181,13 @@ class CaiDat extends StatelessWidget {
                 contentPadding: EdgeInsets.zero,
                 title: Text(
                   "dark_mode".tr(),
-                  style: TextStyle(color: textColor, fontSize: 16 * fontSize),
+                  style: TextStyle(color: textColor, fontSize: 16),
                 ),
                 subtitle: Text(
                   "dark_mode_desc".tr(),
                   style: TextStyle(
                     color: textColor.withOpacity(0.7),
-                    fontSize: 14 * fontSize,
+                    fontSize: 14,
                   ),
                 ),
                 value: isDarkMode,
@@ -149,30 +196,13 @@ class CaiDat extends StatelessWidget {
               ),
               const Divider(),
               // Font Size
-              Text(
-                "font_size".tr(),
-                style: TextStyle(
-                  color: textColor,
-                  fontSize: 16 * fontSize,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const SizedBox(height: 10),
-              Slider(
-                value: fontSize,
-                min: 0.8,
-                max: 1.2,
-                divisions: 4,
-                label: fontSize.toStringAsFixed(2),
-                onChanged: onFontSizeChanged,
-              ),
-              const Divider(),
+              // Removed font size slider
               // Theme Color
               Text(
                 "theme_color".tr(),
                 style: TextStyle(
                   color: textColor,
-                  fontSize: 16 * fontSize,
+                  fontSize: 16,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -224,7 +254,7 @@ class CaiDat extends StatelessWidget {
                 leading: Icon(Icons.info_outline, color: themeColor),
                 title: Text(
                   "about".tr(),
-                  style: TextStyle(color: textColor, fontSize: 16 * fontSize),
+                  style: TextStyle(color: textColor, fontSize: 16),
                 ),
                 trailing: Icon(
                   Icons.arrow_forward_ios,
@@ -244,7 +274,7 @@ class CaiDat extends StatelessWidget {
                 leading: const Icon(Icons.logout, color: Colors.red),
                 title: Text(
                   "logout".tr(),
-                  style: TextStyle(color: Colors.red, fontSize: 16 * fontSize),
+                  style: TextStyle(color: Colors.red, fontSize: 16),
                 ),
                 trailing: Icon(
                   Icons.arrow_forward_ios,

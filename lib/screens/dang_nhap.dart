@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'dang_ky.dart';
 import 'trang_chu.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../widgets/password_field.dart';
 
 class DangNhap extends StatefulWidget {
@@ -33,6 +34,17 @@ class _DangNhapState extends State<DangNhap> {
     }
 
     if (email == demoEmail && password == demoPassword) {
+      // Persist basic profile info
+      SharedPreferences.getInstance().then((prefs) {
+        prefs.setString('profile_email', email);
+        final defaultName = email.contains('@')
+            ? email.split('@').first
+            : 'User';
+        prefs.setString(
+          'profile_name',
+          prefs.getString('profile_name') ?? defaultName,
+        );
+      });
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text('login_success'.tr())));

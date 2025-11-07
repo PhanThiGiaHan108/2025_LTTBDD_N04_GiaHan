@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../data/word.dart';
 
 class ChiTiet extends StatefulWidget {
   final Map<String, dynamic> word;
@@ -118,115 +119,156 @@ class _ChiTietState extends State<ChiTiet> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              word["english"] ?? "",
-              style: const TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-                color: Colors.redAccent,
-              ),
+      body: TweenAnimationBuilder<double>(
+        tween: Tween(begin: 0.0, end: 1.0),
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeOutCubic,
+        builder: (context, value, child) {
+          return Opacity(
+            opacity: value,
+            child: Transform.translate(
+              offset: Offset(0, 30 * (1 - value)),
+              child: child,
             ),
-            const SizedBox(height: 8),
-            if ((word["phonetic"] ?? "").isNotEmpty) ...[
-              Text(
-                word["phonetic"] ?? "",
-                style: const TextStyle(fontSize: 18, color: Colors.black54),
-              ),
-              const SizedBox(height: 8),
-            ],
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-              decoration: BoxDecoration(
-                color: Colors.grey.shade200,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Text(
-                word["type"] ?? "",
-                style: const TextStyle(fontSize: 13),
-              ),
-            ),
-            const SizedBox(height: 16),
-            const Divider(),
-
-            // 🇻🇳 Nghĩa tiếng Việt
-            if ((word["vietnamese"] ?? "").isNotEmpty) ...[
-              Text(
-                word["vietnamese"] ?? "",
-                style: const TextStyle(fontSize: 18, color: Colors.black87),
-              ),
-              const SizedBox(height: 20),
-            ],
-
-            // 📖 Ví dụ
-            if (examples != null && examples.isNotEmpty) ...[
-              const Text(
-                "Ví dụ:",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                  color: Colors.deepPurple,
+          );
+        },
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Hero(
+                tag: 'word_${word["english"]}',
+                child: Material(
+                  color: Colors.transparent,
+                  child: Text(
+                    word["english"] ?? "",
+                    style: const TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.redAccent,
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(height: 8),
-              for (final e in examples)
-                if (e is Map && e['en'] != null)
-                  _example(e['en'].toString(), e['vi']?.toString() ?? ''),
-
-              const SizedBox(height: 20),
-            ],
-
-            // 🧩 Thành ngữ và cụm từ
-            if (idioms != null && idioms.isNotEmpty) ...[
-              const Text(
-                "Thành ngữ & Cụm từ:",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                  color: Colors.deepPurple,
+              if ((word["phonetic"] ?? "").isNotEmpty) ...[
+                Text(
+                  word["phonetic"] ?? "",
+                  style: const TextStyle(fontSize: 18, color: Colors.black54),
+                ),
+                const SizedBox(height: 8),
+              ],
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 4,
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade200,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  word["type"] ?? "",
+                  style: const TextStyle(fontSize: 13),
                 ),
               ),
-              const SizedBox(height: 8),
-              for (final it in idioms)
-                if (it is Map && it['en'] != null)
-                  _example(it['en'].toString(), it['vi']?.toString() ?? ''),
+              const SizedBox(height: 16),
+              const Divider(),
 
-              const SizedBox(height: 20),
-            ],
-
-            // 💬 Từ đồng nghĩa
-            if (synonyms != null && synonyms.isNotEmpty) ...[
-              const Text(
-                "Từ đồng nghĩa:",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                  color: Colors.deepPurple,
+              // 🇻🇳 Nghĩa tiếng Việt
+              if ((word["vietnamese"] ?? "").isNotEmpty) ...[
+                Text(
+                  word["vietnamese"] ?? "",
+                  style: const TextStyle(fontSize: 18, color: Colors.black87),
                 ),
-              ),
-              const SizedBox(height: 8),
-              Wrap(
-                spacing: 8,
-                children: [
-                  for (final s in synonyms)
-                    if (s != null)
-                      ActionChip(
-                        label: Text(s.toString()),
-                        onPressed: () {
-                          // Quay lại trang chủ và tìm kiếm từ này
-                          Navigator.pop(context, s.toString());
-                        },
-                        backgroundColor: Colors.purple.shade50,
-                        side: BorderSide(color: Colors.purple.shade200),
-                      ),
-                ],
-              ),
+                const SizedBox(height: 20),
+              ],
+
+              // 📖 Ví dụ
+              if (examples != null && examples.isNotEmpty) ...[
+                const Text(
+                  "Ví dụ:",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: Colors.deepPurple,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                for (final e in examples)
+                  if (e is Map && e['en'] != null)
+                    _example(e['en'].toString(), e['vi']?.toString() ?? ''),
+
+                const SizedBox(height: 20),
+              ],
+
+              // 🧩 Thành ngữ và cụm từ
+              if (idioms != null && idioms.isNotEmpty) ...[
+                const Text(
+                  "Thành ngữ & Cụm từ:",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: Colors.deepPurple,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                for (final it in idioms)
+                  if (it is Map && it['en'] != null)
+                    _example(it['en'].toString(), it['vi']?.toString() ?? ''),
+
+                const SizedBox(height: 20),
+              ],
+
+              // 💬 Từ đồng nghĩa
+              if (synonyms != null && synonyms.isNotEmpty) ...[
+                const Text(
+                  "Từ đồng nghĩa:",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: Colors.deepPurple,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Wrap(
+                  spacing: 8,
+                  children: [
+                    for (final s in synonyms)
+                      if (s != null)
+                        ActionChip(
+                          label: Text(s.toString()),
+                          onPressed: () {
+                            // Tìm từ đồng nghĩa trong wordList
+                            final synonymWord = wordList.firstWhere(
+                              (w) =>
+                                  w['english'].toString().toLowerCase() ==
+                                  s.toString().toLowerCase(),
+                              orElse: () => {},
+                            );
+
+                            // Nếu tìm thấy, navigate đến trang chi tiết của từ đó
+                            if (synonymWord.isNotEmpty) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ChiTiet(
+                                    word: synonymWord,
+                                    onFavoriteChanged: widget.onFavoriteChanged,
+                                  ),
+                                ),
+                              );
+                            }
+                          },
+                          backgroundColor: Colors.purple.shade50,
+                          side: BorderSide(color: Colors.purple.shade200),
+                        ),
+                  ],
+                ),
+              ],
             ],
-          ],
+          ),
         ),
       ),
     );
