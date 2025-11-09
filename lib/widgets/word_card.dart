@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-/// Widget hiển thị thẻ từ vựng với animations đẹp mắt
 /// Được sử dụng trong trang_chu.dart và tu_cua_ban.dart
 class WordCard extends StatefulWidget {
   final Map<String, dynamic> word;

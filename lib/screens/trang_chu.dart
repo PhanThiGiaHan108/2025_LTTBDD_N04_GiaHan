@@ -5,7 +5,6 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'chi_tiet.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-// import '../widgets/word_card.dart'; // Removed unused import after refactor
 import '../widgets/empty_state.dart';
 import '../widgets/suggestion_chip.dart';
 import '../data/word.dart';
@@ -156,7 +155,6 @@ class _TrangChuState extends State<TrangChu> {
   }
 
   List<Map<String, dynamic>> _getFilteredWords() {
-    // Nếu chưa nhập gì thì trả về danh sách rỗng (không hiển thị gì)
     if (_searchQuery.isEmpty) {
       return [];
     }
@@ -333,7 +331,7 @@ class _TrangChuState extends State<TrangChu> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "📜 Lịch sử tra từ",
+                                  "history_title".tr(),
                                   style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
@@ -345,15 +343,17 @@ class _TrangChuState extends State<TrangChu> {
                                     showDialog(
                                       context: context,
                                       builder: (context) => AlertDialog(
-                                        title: const Text("Xóa lịch sử"),
-                                        content: const Text(
-                                          "Bạn có chắc chắn muốn xóa toàn bộ lịch sử tra từ?",
+                                        title: Text(
+                                          "clear_history_confirm_title".tr(),
+                                        ),
+                                        content: Text(
+                                          "clear_history_confirm_message".tr(),
                                         ),
                                         actions: [
                                           TextButton(
                                             onPressed: () =>
                                                 Navigator.pop(context),
-                                            child: const Text("Hủy"),
+                                            child: Text("cancel".tr()),
                                           ),
                                           TextButton(
                                             onPressed: () {
@@ -362,16 +362,16 @@ class _TrangChuState extends State<TrangChu> {
                                               ScaffoldMessenger.of(
                                                 context,
                                               ).showSnackBar(
-                                                const SnackBar(
+                                                SnackBar(
                                                   content: Text(
-                                                    "Đã xóa lịch sử tra từ",
+                                                    "history_cleared".tr(),
                                                   ),
                                                 ),
                                               );
                                             },
-                                            child: const Text(
-                                              "Xóa",
-                                              style: TextStyle(
+                                            child: Text(
+                                              "delete".tr(),
+                                              style: const TextStyle(
                                                 color: Colors.red,
                                               ),
                                             ),
@@ -384,7 +384,7 @@ class _TrangChuState extends State<TrangChu> {
                                     Icons.delete_sweep,
                                     size: 18,
                                   ),
-                                  label: const Text("Xóa tất cả"),
+                                  label: Text("clear_history".tr()),
                                   style: TextButton.styleFrom(
                                     foregroundColor: Colors.red,
                                     padding: const EdgeInsets.symmetric(

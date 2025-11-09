@@ -20,7 +20,7 @@ class _LogoState extends State<Logo> with SingleTickerProviderStateMixin {
       duration: const Duration(seconds: 2),
     )..repeat();
 
-    // navigate after 5 seconds
+    // navigate after 2 seconds
     Future.delayed(const Duration(seconds: 2), () {
       if (!mounted) return;
       Navigator.of(
